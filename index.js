@@ -1,9 +1,10 @@
 
 import express from 'express';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import path, { dirname } from 'path';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import e from 'express';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,11 +31,14 @@ app.use((_req, res, next) => {
 // Serve static files
 app.use(express.static('public'));
 
+app.use(express.static(__dirname + '/public'));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve the index.html file
 app.get('/', (_req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 
 
 
